@@ -24,6 +24,6 @@ const devConfig = {
   appId: "1:860290522386:web:bb8f28ab251f9e55",
 };
 
-export const app = initializeApp( process.env.NODE_ENV === 'production' ? prodConfig: devConfig );
+export const app = initializeApp(devConfig);
 
 export const db = getFirestore();
