@@ -36,6 +36,7 @@ export default function SignUp() {
           break;
         default:
           setError("Failed to create an account");
+          console.log(err.code)
       }
     }
     setLoading(false);
