@@ -26,4 +26,4 @@ const devConfig = {
 
 export const app = initializeApp(devConfig);
 
-export const db = getFirestore();
+export const db = getFirestore(app);
