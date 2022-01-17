@@ -5,7 +5,11 @@ export default function ExperienceQuestions({
   nextStep,
   values,
   handleFormData,
+  setValidated,
+  validated,
 }) {
+  const { discussionTopics } = values;
+
   const topics = [
     "Binding",
     "Coming Out",
@@ -22,23 +26,41 @@ export default function ExperienceQuestions({
   ];
   const submitFormData = (e) => {
     e.preventDefault();
-    nextStep();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      e.preventDefault();
+      e.stopPropagation();
+      nextStep();
+    }
+
+    setValidated(true);
   };
+
   return (
-    <Form onSubmit={submitFormData}>
+    <Form noValidate validated={validated} onSubmit={(e) => submitFormData(e)}>
+      <h3 className="mb-4">EXPERIENCE</h3>
       <Row className="mb-3">
         <Form.Group controlId="yearsBeingTrans">
-          <Form.Select
+          <Form.Control
+            as="select"
+            required
+            className="py-3"
             onChange={(e) => handleFormData("yearsBeingTrans", e)}
             aria-label="How many years have you identified as transgender? "
           >
-            <option>How many years have you identified as transgender? </option>
+            <option value="">
+              How many years have you identified as transgender?
+            </option>
             <option value="0-1">0-1</option>
             <option value="2-3">2-3</option>
             <option value="3-5">3-5</option>
             <option value="5-10">5-10</option>
             <option value="10+">10+</option>
-          </Form.Select>
+          </Form.Control>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please choose the option above
+          </Form.Control.Feedback>
         </Form.Group>
       </Row>
       <Row className="mb-3">
@@ -60,6 +82,14 @@ export default function ExperienceQuestions({
               />
             );
           })}
+          {discussionTopics.includes("Topic is not listed") && (
+            <Form.Control
+              type="text"
+              placeholder="Please write your topic.."
+              onChange={(e) => handleFormData("discussionTopicNotList", e)}
+              className="mt-4"
+            />
+          )}
         </Col>
       </Row>
       <Row className="my-3">
@@ -73,14 +103,9 @@ export default function ExperienceQuestions({
           </FloatingLabel>
         </Form.Group>
       </Row>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <Button variant="primary" onClick={prevStep}>
-          Previous
-        </Button>
-
-        <Button variant="primary" type="submit">
-          Next
-        </Button>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button onClick={prevStep}>Previous</Button>
+        <Button type="submit">Next</Button>
       </div>
     </Form>
   );

@@ -1,19 +1,34 @@
 import { Form, Button } from "react-bootstrap";
-export default function MentorshipStatus({ setMentor, nextStep, prevStep }) {
+
+export default function MentorshipStatus({
+  setMentor,
+  nextStep,
+  prevStep,
+  setValidated,
+  validated,
+}) {
   const submitFormData = (e) => {
     e.preventDefault();
-    nextStep();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      e.preventDefault();
+      e.stopPropagation();
+      nextStep();
+    }
+
+    setValidated(true);
   };
   return (
-    <Form onSubmit={submitFormData}>
-      <Form.Label
+    <Form noValidate validated={validated} onSubmit={submitFormData}>
+      <h3 className="mb-4">MENTORSHIP ROLE</h3>
+      <h4
         htmlFor="mentor"
         style={{ display: "flex", justifyContent: "center" }}
       >
         Are you interested in a mentorship or mentoring?
-      </Form.Label>
+      </h4>
       <Form.Group
-        className="mb-3"
+        className="my-3"
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Form.Check
@@ -29,16 +44,15 @@ export default function MentorshipStatus({ setMentor, nextStep, prevStep }) {
           type="radio"
           label="Mentor"
           name="mentor"
+          required
+          feedback="Required"
+          feedbackType="invalid"
         />
       </Form.Group>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <Button variant="primary" onClick={prevStep}>
-          Previous
-        </Button>
 
-        <Button variant="primary" type="submit">
-          Next
-        </Button>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button onClick={prevStep}>Previous</Button>
+        <Button type="submit">Next</Button>
       </div>
     </Form>
   );

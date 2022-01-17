@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ExperienceQuestions from "./ExperienceQuestions";
 import MentorshipStatus from "./MentorshipStatus";
 import UserDetails from "./UserDetails";
@@ -10,24 +10,38 @@ import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
+import { Alert } from "bootstrap";
 
-export default function OnBoardingForm() {
+export default function OnBoardingForm({ setProgress, progress }) {
   const navigate = useNavigate();
 
   const { currentUser } = useAuth();
 
   const [showModal, setShowModal] = useState(false);
-  const [mentor, setMentor] = useState(false);
+  const [mentor, setMentor] = useState(null);
   const [step, setstep] = useState(1);
+  const [validated, setValidated] = useState(false);
+
+  useEffect(() => {
+    if (step > 1) {
+      setProgress(step * 25);
+    }
+    return;
+  }, [step, setProgress]);
+
   const [formData, setFormData] = useState({
     fullName: "",
     age: "",
     city: "",
     pronouns: "",
+    pronounsNotListed: "",
     genderIdentity: "",
+    genderIdentityNotListed: "",
     sexualIdentity: "",
+    sexualIdentityNotListed: "",
     yearsBeingTrans: "",
     discussionTopics: [],
+    discussionTopicNotList: "",
     gainExperience: "",
     benefiticalPart: "",
     proximity: "",
@@ -41,10 +55,14 @@ export default function OnBoardingForm() {
       age,
       city,
       pronouns,
+      pronounsNotListed,
       genderIdentity,
+      genderIdentityNotListed,
       sexualIdentity,
+      sexualIdentityNotListed,
       yearsBeingTrans,
       discussionTopics,
+      discussionTopicNotList,
       gainExperience,
       benefiticalPart,
       proximity,
@@ -61,10 +79,14 @@ export default function OnBoardingForm() {
           age: age,
           city: city,
           pronouns: pronouns,
+          pronounsNotListed: pronounsNotListed,
           genderIdentity: genderIdentity,
+          genderIdentityNotListed: genderIdentityNotListed,
           sexualIdentity: sexualIdentity,
+          sexualIdentityNotListed: sexualIdentityNotListed,
           yearsBeingTrans: yearsBeingTrans,
           discussionTopics: discussionTopics,
+          discussionTopicNotList: discussionTopicNotList,
           gainExperience: gainExperience,
           benefiticalPart: benefiticalPart,
           proximity: proximity,
@@ -75,7 +97,7 @@ export default function OnBoardingForm() {
         },
       });
     } catch (error) {
-      console.log(error);
+      return <Alert variant="danger">{error}</Alert>;
     }
   }
 
@@ -84,7 +106,6 @@ export default function OnBoardingForm() {
   const onSubmit = async () => {
     await sleep(300);
     writeUserData(formData, mentor);
-    console.log('trigger')
   };
 
   const nextStep = () => {
@@ -93,9 +114,13 @@ export default function OnBoardingForm() {
 
   const prevStep = () => {
     setstep(step - 1);
+    setProgress(progress - 25);
   };
 
   const handleInputState = (prevState, e, input) => {
+    if (input === "city") {
+      return [...prevState.city, e];
+    }
     const { value } = e.target;
     if (input === "discussionTopics") {
       return [...prevState.discussionTopics, value];
@@ -128,6 +153,8 @@ export default function OnBoardingForm() {
           nextStep={nextStep}
           handleFormData={handleInputData}
           values={formData}
+          validated={validated}
+          setValidated={setValidated}
         />
       );
     case 2:
@@ -136,6 +163,8 @@ export default function OnBoardingForm() {
           setMentor={setMentor}
           nextStep={nextStep}
           prevStep={prevStep}
+          setValidated={setValidated}
+          validated={validated}
         />
       );
     case 3:
@@ -145,6 +174,8 @@ export default function OnBoardingForm() {
           values={formData}
           nextStep={nextStep}
           prevStep={prevStep}
+          setValidated={setValidated}
+          validated={validated}
         />
       );
     case 4:
@@ -155,6 +186,8 @@ export default function OnBoardingForm() {
           nextStep={nextStep}
           prevStep={prevStep}
           mentor={mentor}
+          setValidated={setValidated}
+          validated={validated}
         />
       );
     case 5:

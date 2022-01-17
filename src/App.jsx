@@ -8,54 +8,62 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import React from "react";
 import UpdateProfile from "./components/UpdateProfile";
-import OnBoardingForm from "./components/OnboardingForm";
+
+import Navigation from "./components/Navigation";
+import About from "./components/About";
+import FAQ from "./components/FAQ";
+import OnboardingWrapper from "./components/OnboardingWrapper";
 
 export default function App() {
   return (
-    <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "600px" }}>
-        <h1 className="text-center my-4">Big Sibling</h1>
-        <BrowserRouter>
-          <AuthProvider>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  <PrivateRoute>
-                    <Dashboard />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/update-profile"
-                element={
-                  <PrivateRoute>
-                    <UpdateProfile />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                exact
-                path="/onboard"
-                element={
-                  <PrivateRoute>
-                    <OnBoardingForm />
-                  </PrivateRoute>
-                }
-              />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="*" element={NotFound()} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
-      </div>
-    </Container>
+    <>
+      <Navigation />
+      <Container
+        className="d-flex align-items-center justify-content-center"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="w-100" style={{ maxWidth: "600px" }}>
+          <BrowserRouter>
+            <AuthProvider>
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/update-profile"
+                  element={
+                    <PrivateRoute>
+                      <UpdateProfile />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  exact
+                  path="/onboard"
+                  element={
+                    <PrivateRoute>
+                      <OnboardingWrapper />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="/about" element={<About />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="*" element={NotFound()} />
+              </Routes>
+            </AuthProvider>
+          </BrowserRouter>
+        </div>
+      </Container>
+    </>
   );
 }
 

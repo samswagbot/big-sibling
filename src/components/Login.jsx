@@ -22,21 +22,21 @@ export default function Login() {
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
       navigate("/");
-    } catch(err) {
+    } catch (err) {
       setError("Failed to Sign In");
-      console.log(err)
+      console.errorlog(err);
     }
     setLoading(false);
   }
 
   return (
     <>
-      <Card>
+      <Card className="shadow">
         <Card.Body>
-          <h2 className="text-center mb-4">Log In</h2>
+          <Card.Title className="text-center">LOGIN</Card.Title>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
+            <Form.Group id="email" className="mb-3">
               <Form.Label>Email</Form.Label>
               <Form.Control required ref={emailRef} type="email" />
             </Form.Group>
@@ -45,7 +45,7 @@ export default function Login() {
               <Form.Control required ref={passwordRef} type="password" />
             </Form.Group>
             <Button disabled={loading} type="submit" className="w-100 mt-4">
-              Log in
+              LOGIN
             </Button>
           </Form>
           <div className="w-100 text-center mt-3">
@@ -53,8 +53,8 @@ export default function Login() {
           </div>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+      <div className="w-100 text-center mt-4">
+        Need an account? <Link to="/signup">SIGN UP</Link>
       </div>
     </>
   );

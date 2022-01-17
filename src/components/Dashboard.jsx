@@ -36,9 +36,9 @@ export default function Dashboard() {
   }
   return (
     <>
-      <Card>
+      <Card className="shadow">
         <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
+          <Card.Title>Profile</Card.Title>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email: </strong>
           {currentUser.email}
@@ -46,7 +46,7 @@ export default function Dashboard() {
             Update Profile
           </Link>
           <Link to="/onboard" className="btn btn-primary w-100 mt-3">
-            Get started!
+            Mentorship Application
           </Link>
         </Card.Body>
       </Card>

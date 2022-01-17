@@ -3,9 +3,10 @@ import { Form, Row, FloatingLabel, Button } from "react-bootstrap";
 export default function Contact({
   prevStep,
   nextStep,
-  values,
   handleFormData,
   mentor,
+  setValidated,
+  validated,
 }) {
   const methodOfContact = [
     "Text",
@@ -18,21 +19,23 @@ export default function Contact({
 
   const submitFormData = (e) => {
     e.preventDefault();
-    nextStep();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      e.preventDefault();
+      e.stopPropagation();
+      nextStep();
+    }
+
+    setValidated(true);
   };
   return (
-    <Form onSubmit={submitFormData}>
-      <Row>
-        <Form.Label
-          htmlFor="proximity"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+    <Form noValidate validated={validated} onSubmit={(e) => submitFormData(e)}>
+      <h3 className="mb-3">CONTACT</h3>
+      <Row className="mb-4">
+        <h4 className="mb-3" htmlFor="proximity">
           How important is proximity to your {mentor ? "mentor" : "mentee"}?
-        </Form.Label>
-        <Form.Group
-          className="mb-3"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+        </h4>
+        <Form.Group>
           {importance.map((answers) => {
             return (
               <Form.Check
@@ -50,11 +53,14 @@ export default function Contact({
       </Row>
       <Row className="mb-4">
         <Form.Group controlId="preferredMethod">
-          <Form.Select
+          <Form.Control
+            required
+            className="py-3"
+            as="select"
             aria-label="Preferred Method"
             onChange={(e) => handleFormData("preferredMethod", e)}
           >
-            <option>What is your preferred method of contact?</option>
+            <option value="">What is your preferred method of contact?</option>
             {methodOfContact.map((answers) => {
               return (
                 <option key={answers} value={answers}>
@@ -62,7 +68,11 @@ export default function Contact({
                 </option>
               );
             })}
-          </Form.Select>
+          </Form.Control>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please choose the option above
+          </Form.Control.Feedback>
         </Form.Group>
       </Row>
       {mentor && (
@@ -81,17 +91,11 @@ export default function Contact({
           </Form.Group>
         </Row>
       )}
-      <Row>
-        <Form.Label
-          htmlFor="productLike"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+      <Row className="mb-4">
+        <h4 htmlFor="productLike">
           How important do you think this product would be?
-        </Form.Label>
-        <Form.Group
-          className="mb-3"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+        </h4>
+        <Form.Group>
           {importance.map((answers) => {
             return (
               <Form.Check
@@ -106,7 +110,7 @@ export default function Contact({
           })}
         </Form.Group>
       </Row>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Button variant="primary" onClick={prevStep}>
           Previous
         </Button>

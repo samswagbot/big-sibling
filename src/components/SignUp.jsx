@@ -36,7 +36,7 @@ export default function SignUp() {
           break;
         default:
           setError("Failed to create an account");
-          console.log(err.code)
+          console.error(err.code);
       }
     }
     setLoading(false);
@@ -45,16 +45,16 @@ export default function SignUp() {
 
   return (
     <>
-      <Card>
+      <Card className="shadow">
         <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+          <Card.Title className="text-center ">SIGNUP</Card.Title>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
+            <Form.Group id="email" className="mb-3">
               <Form.Label>Email</Form.Label>
               <Form.Control required ref={emailRef} type="email" />
             </Form.Group>
-            <Form.Group id="password">
+            <Form.Group id="password" className="mb-3">
               <Form.Label>Password</Form.Label>
               <Form.Control required ref={passwordRef} type="password" />
             </Form.Group>
@@ -67,13 +67,13 @@ export default function SignUp() {
               />
             </Form.Group>
             <Button disabled={loading} type="submit" className="w-100 mt-4">
-              Sign Up
+              SUBMIT
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/login">Log In</Link>
+      <div className="w-100 text-center mt-3">
+        Already have an account? <Link to="/login">LOG IN</Link>
       </div>
     </>
   );
