@@ -6,7 +6,6 @@ import AuthProvider from "./contexts/AuthContext";
 import ForgotPassword from "./components/ForgotPassword";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import React, { useEffect } from "react";
 import UpdateProfile from "./components/UpdateProfile";
 
 import Navigation from "./components/Navigation";
