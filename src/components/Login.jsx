@@ -23,8 +23,20 @@ export default function Login() {
       await login(emailRef.current.value, passwordRef.current.value);
       navigate("/");
     } catch (err) {
-      setError("Failed to Sign In");
-      console.errorlog(err);
+      switch (err.code) {
+        case "auth/wrong-password":
+          setError("Opps! Wrong password");
+          break;
+        case "auth/too-many-requests":
+          setError("This account has been locked due to too many tries");
+          break;
+
+        default:
+          setError("Failed to Sign In");
+          console.error(err.code);
+      }
+
+      console.error(err);
     }
     setLoading(false);
   }

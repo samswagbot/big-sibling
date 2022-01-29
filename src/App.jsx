@@ -6,7 +6,7 @@ import AuthProvider from "./contexts/AuthContext";
 import ForgotPassword from "./components/ForgotPassword";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import React from "react";
+import React, { useEffect } from "react";
 import UpdateProfile from "./components/UpdateProfile";
 
 import Navigation from "./components/Navigation";
@@ -15,6 +15,19 @@ import FAQ from "./components/FAQ";
 import OnboardingWrapper from "./components/OnboardingWrapper";
 
 export default function App() {
+  useEffect(() => {
+    const src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_PLACE_API_KEY}&libraries=places`;
+    const script = document.createElement("script");
+
+    script.src = src;
+    script.async = true;
+
+    document.body.appendChild(script);
+    return () => {
+      script.src = "";
+    };
+  }, []);
+
   return (
     <>
       <Navigation />
