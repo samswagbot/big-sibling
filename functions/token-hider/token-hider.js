@@ -1,7 +1,6 @@
 const process = require("process");
 
 const axios = require("axios");
-const qs = require("qs");
 
 const handler = async function (event) {
   // apply our function to the queryStringParameters and assign it to a variable
@@ -11,8 +10,9 @@ const handler = async function (event) {
 
   // TODO: customize your URL and API keys set in the Netlify Dashboard
   // this is secret too, your frontend won't see this
-  const { API_SECRET } = process.env;
-  const URL = `https://maps.googleapis.com/maps/api/js?key=${API_SECRET}&libraries=places`;
+  const { API_SECRET, API_URL } = process.env;
+
+  const URL = `${API_URL}?key=${API_SECRET}&libraries=places`;
 
   console.log("Constructed URL is ...", URL);
 
