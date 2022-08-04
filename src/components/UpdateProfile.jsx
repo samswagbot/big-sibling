@@ -5,7 +5,13 @@ import { useAuth } from "../contexts/AuthContext";
 
 
 export default function UpdateProfile() {
-  const { currentUser, changeEmail, changePassword } = useAuth();
+  const {
+    currentUser,
+    changeEmail,
+    changePassword,
+    changePhoneNumber,
+    changeDisplayName,
+  } = useAuth();
 
   const navigate = useNavigate();
   const [error, setError] = useState(``);
@@ -14,6 +20,8 @@ export default function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmationRef = useRef();
+  const phoneRef = useRef();
+  const displayNameRef = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,6 +38,13 @@ export default function UpdateProfile() {
 
     if (passwordRef.current.value !== currentUser.password) {
       promises.push(changePassword(passwordRef.current.value));
+    }
+    if (phoneRef.current.value !== currentUser.phone) {
+      promises.push(changePhoneNumber(phoneRef.current.value));
+    }
+
+    if (displayNameRef.current.value !== currentUser.displayName) {
+      promises.push(changeDisplayName(displayNameRef.current.value));
     }
 
     Promise.all(promises)
@@ -56,7 +71,7 @@ export default function UpdateProfile() {
           <h2 className="text-center mb-4">Update Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
+            <Form.Group id="email" className="mt-2">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 defaultValue={currentUser.email}
@@ -65,7 +80,7 @@ export default function UpdateProfile() {
                 type="email"
               />
             </Form.Group>
-            <Form.Group id="password">
+            <Form.Group id="password" className="mt-2">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 placeholder="Leave blank to keep the same"
@@ -73,12 +88,29 @@ export default function UpdateProfile() {
                 type="password"
               />
             </Form.Group>
-            <Form.Group id="password-confirm">
+            <Form.Group id="password-confirm" className="mt-2">
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control
                 placeholder="Leave blank to keep the same"
                 ref={passwordConfirmationRef}
                 type="password"
+              />
+            </Form.Group>
+            <Form.Group id="phone" className="mt-2">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                placeholder="enter phone number"
+                ref={phoneRef}
+                type="tel"
+                as="input"
+              />
+            </Form.Group>
+            <Form.Group id="displayName" className="mt-2">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                placeholder="name"
+                ref={displayNameRef}
+                type="text"
               />
             </Form.Group>
             <Button disabled={loading} type="submit" className="w-100 mt-4">

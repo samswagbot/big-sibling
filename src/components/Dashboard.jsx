@@ -9,6 +9,7 @@ export default function Dashboard() {
   const db = getDatabase();
 
   const userDetails = ref(db, currentUser.uid);
+  console.log(currentUser);
   onValue(
     userDetails,
     (snapshot) => {
@@ -36,12 +37,27 @@ export default function Dashboard() {
   }
   return (
     <>
+      <Card className="shadow mb-3">
+        <Card.Header>Profile</Card.Header>
+        <Card.Body>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <p>
+            <strong>Name: </strong>
+            {currentUser.displayName}
+          </p>
+          <p>
+            <strong>Email: </strong>
+            {currentUser.email}
+          </p>
+          <p>
+            <strong>Phone: </strong>
+            {currentUser.displayName}
+          </p>
+        </Card.Body>
+      </Card>
       <Card className="shadow">
         <Card.Body>
-          <Card.Title>Profile</Card.Title>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email: </strong>
-          {currentUser.email}
+          <Card.Title>Actions</Card.Title>
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>

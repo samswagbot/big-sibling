@@ -8,6 +8,8 @@ import {
   sendPasswordResetEmail,
   updateEmail,
   updatePassword,
+  updatePhoneNumber,
+  updateProfile,
 } from "firebase/auth";
 import { app } from "../firebase";
 
@@ -57,13 +59,13 @@ export default function AuthProvider({ children }) {
     return updatePassword(auth.currentUser, password);
   }
 
-  // function reauth() {
-  //   const cred = app.auth.EmailAuthProvider.credential(
-  //     currentUser.email,
-  //     currentUser.password
-  //   );
-  //   return reauthenticateWithCredential(currentUser, cred);
-  // }
+  function changePhoneNumber(phoneNumber) {
+    return updatePhoneNumber(auth.currentUser, phoneNumber);
+  }
+
+  function changeDisplayName(name) {
+    return updateProfile(auth.currentUser, { displayName: name });
+  }
 
   const value = {
     currentUser,
@@ -73,7 +75,8 @@ export default function AuthProvider({ children }) {
     resetPassword,
     changeEmail,
     changePassword,
-    // reauth,
+    changePhoneNumber,
+    changeDisplayName,
   };
   return (
     <AuthContext.Provider value={value}>
