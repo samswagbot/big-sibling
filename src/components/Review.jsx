@@ -6,6 +6,7 @@ export default function Review({ values }) {
     fullName,
     age,
     city,
+    state,
     pronouns,
     genderIdentity,
     sexualIdentity,
@@ -29,6 +30,9 @@ export default function Review({ values }) {
           </p>
           <p>
             <strong>City :</strong> {city}{" "}
+          </p>
+          <p>
+            <strong>State :</strong> {state}{" "}
           </p>
           <p>
             <strong>Pronouns :</strong> {pronouns}{" "}

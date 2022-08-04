@@ -33,6 +33,7 @@ export default function OnBoardingForm({ setProgress, progress }) {
     fullName: "",
     age: "",
     city: "",
+    state: "",
     pronouns: "",
     pronounsNotListed: "",
     genderIdentity: "",
@@ -54,6 +55,7 @@ export default function OnBoardingForm({ setProgress, progress }) {
       fullName,
       age,
       city,
+      state,
       pronouns,
       pronounsNotListed,
       genderIdentity,
@@ -78,6 +80,7 @@ export default function OnBoardingForm({ setProgress, progress }) {
           fullName: fullName,
           age: age,
           city: city,
+          state: state,
           pronouns: pronouns,
           pronounsNotListed: pronounsNotListed,
           genderIdentity: genderIdentity,
@@ -118,9 +121,9 @@ export default function OnBoardingForm({ setProgress, progress }) {
   };
 
   const handleInputState = (prevState, e, input) => {
-    if (input === "city") {
-      return [...prevState.city, e];
-    }
+    // if (input === "city") {
+    //   return [...prevState.city, e];
+    // }
     const { value } = e.target;
     if (input === "discussionTopics") {
       return [...prevState.discussionTopics, value];

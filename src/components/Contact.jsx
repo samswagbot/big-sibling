@@ -1,4 +1,4 @@
-import { Form, Row, FloatingLabel, Button } from "react-bootstrap";
+import { Form, Row, Button } from "react-bootstrap";
 
 export default function Contact({
   prevStep,
@@ -33,7 +33,8 @@ export default function Contact({
       <h3 className="mb-3">CONTACT</h3>
       <Row className="mb-4">
         <h4 className="mb-3" htmlFor="proximity">
-          How important is proximity to your {mentor ? "mentor" : "mentee"}?
+          How important is physical proximity to your{" "}
+          {mentor ? "mentor" : "mentee"}?
         </h4>
         <Form.Group>
           {importance.map((answers) => {
@@ -78,16 +79,15 @@ export default function Contact({
       {mentor && (
         <Row className="mb-3">
           <Form.Group>
-            <FloatingLabel
-              label=" If you've had previous as a mentor, what was most beneficial part of
-      that mentorship?"
-            >
-              <Form.Control
-                onChange={(e) => handleFormData("benefiticalPart", e)}
-                as="textarea"
-                rows={3}
-              />
-            </FloatingLabel>
+            <Form.Label>
+              If you've had previous as a mentor, what was most beneficial part
+              of that mentorship?
+            </Form.Label>
+            <Form.Control
+              onChange={(e) => handleFormData("benefiticalPart", e)}
+              as="textarea"
+              rows={3}
+            />
           </Form.Group>
         </Row>
       )}

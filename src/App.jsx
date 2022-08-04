@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -15,34 +14,6 @@ import FAQ from "./components/FAQ";
 import OnboardingWrapper from "./components/OnboardingWrapper";
 
 export default function App() {
-  const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_PLACE_API_KEY}&libraries=places`;
-  useEffect(() => {
-    fetchApiKeyFromNetlify();
-    const script = document.createElement("script");
-
-    if (process.env.NODE_ENV === "development") {
-      script.src = url;
-    }
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [url]);
-
-  async function fetchApiKeyFromNetlify() {
-    await fetch("/.netlify/functions/token-hider", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((url) => url);
-  }
-
   return (
     <>
       <Navigation />

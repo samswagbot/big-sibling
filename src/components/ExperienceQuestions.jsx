@@ -1,4 +1,4 @@
-import { Form, Row, Col, Button, FloatingLabel } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 
 export default function ExperienceQuestions({
   prevStep,
@@ -93,14 +93,15 @@ export default function ExperienceQuestions({
         </Col>
       </Row>
       <Row className="my-3">
-        <Form.Group>
-          <FloatingLabel label="What are you looking to gain out of this experience?">
-            <Form.Control
-              onChange={(e) => handleFormData("gainExperience", e)}
-              as="textarea"
-              rows={3}
-            />
-          </FloatingLabel>
+        <Form.Group controlId="gainExperience">
+          <Form.Label controlId="gainExperience">
+            What are you looking to gain out of this experience?
+          </Form.Label>
+          <Form.Control
+            onChange={(e) => handleFormData("gainExperience", e)}
+            as="textarea"
+            rows={3}
+          />
         </Form.Group>
       </Row>
       <div style={{ display: "flex", justifyContent: "space-between" }}>

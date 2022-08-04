@@ -1,5 +1,5 @@
 import { Form, Row, Col, FloatingLabel, Button } from "react-bootstrap";
-import AutoSuggestCities from "./AutoSuggestCities";
+
 
 export default function UserDetails({
   nextStep,
@@ -8,8 +8,15 @@ export default function UserDetails({
   validated,
   setValidated,
 }) {
-  const { fullName, age, city, pronouns, genderIdentity, sexualIdentity } =
-    values;
+  const {
+    fullName,
+    age,
+    city,
+    pronouns,
+    genderIdentity,
+    sexualIdentity,
+    state,
+  } = values;
 
   const submitFormData = (e) => {
     e.preventDefault();
@@ -63,9 +70,42 @@ export default function UserDetails({
             </Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
-        <Form.Group as={Col} controlId="city">
-          <AutoSuggestCities city={city} handleFormData={handleFormData} />
-        </Form.Group>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group className="mb-3" controlId="city">
+            <FloatingLabel controlId="city" label="City" className="mb-2">
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter your city.."
+                onChange={(e) => handleFormData("city", e)}
+                defaultValue={city}
+              />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please provide your city
+              </Form.Control.Feedback>
+            </FloatingLabel>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-3" controlId="state">
+            <FloatingLabel controlId="state" label="State" className="mb-2">
+              <Form.Control
+                required
+                type="text"
+                placeholder="Enter your state.."
+                onChange={(e) => handleFormData("state", e)}
+                defaultValue={state}
+              />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please provide your state
+              </Form.Control.Feedback>
+            </FloatingLabel>
+          </Form.Group>
+        </Col>
       </Row>
       <Row className="mb-4">
         <Col>
@@ -83,6 +123,9 @@ export default function UserDetails({
               <option value="They/Them/Their">They/Them/Their</option>
               <option value="My pronouns are not listed">
                 My pronouns are not listed
+              </option>
+              <option value="I do not use any pronouns">
+                I do not use any pronouns
               </option>
             </Form.Control>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
